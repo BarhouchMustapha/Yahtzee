@@ -45,7 +45,7 @@ public class Figure {
                 }
             }
             if (count >= 3) { 
-                if (this.prise == false) {
+                if (!this.estPrise()) {
                     return true;
                 }
             }
@@ -62,7 +62,7 @@ public class Figure {
                 }
             }
             if (count >= 4) {
-                if (this.prise == false) {
+                if (!this.estPrise()) {
                     return true;
                 }            
             }
@@ -71,7 +71,7 @@ public class Figure {
     }
 
     public boolean estchance(De[] des){
-        if (this.prise == false) {
+        if (!this.estPrise()) {
             return true;
         } 
         return false;
