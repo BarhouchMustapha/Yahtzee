@@ -8,12 +8,15 @@ public class FigureMineur extends Figure {
     
     public FigureMineur(String name , int valde) {
         super(name);
-        this.ValDe =valde;
+        this.ValDe = valde;
     }
 
     public int getValDe(){
         return this.ValDe;
     }
+
+    
+    
 
     public boolean estCorrecte(De[] des) {
         if(!this.estPrise()){

@@ -7,7 +7,7 @@ public class De implements Comparable<De> {
 
     public De() {
         random = new Random();
-        lancer(); // Lance le dé lors de création d'un objet
+        lancer();
     }
 
     public void lancer() {
