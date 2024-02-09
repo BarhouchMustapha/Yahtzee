@@ -125,6 +125,7 @@ public  class Tour {
     }
 
     public void barreFigure(Figure F){
+        this.scoreTour = 0;
         F.setPrise();
         this.numTour++;
     }

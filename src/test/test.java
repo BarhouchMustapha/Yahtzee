@@ -4,7 +4,7 @@ import Jeu.*;
 
 public class test {
     public static void main(String[] args) {
-        Lancer L = new Lancer();
+        /*Lancer L = new Lancer();
         L.lancer();
         De[] des;
         des = L.getDes();
@@ -20,7 +20,10 @@ public class test {
         L.relancer();
         for(De d : des){
             System.out.print(d.getValeur()+" ");
-        }
+        }*/
+
+        TableAffichage T = new TableAffichage();
+        T.afficherTable();
         
 
 
