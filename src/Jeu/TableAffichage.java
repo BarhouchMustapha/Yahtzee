@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 public class TableAffichage {
 
-    private Map<String, Integer> TableScoresmin = new HashMap<>(6);
-    private Map<String, Integer> TableScoresmaj = new HashMap<>(7);
-    private Map<String, Integer> TableAffich = new HashMap<>(2);
+    public Map<String, Integer> TableScoresmin = new HashMap<>(6);
+    public Map<String, Integer> TableScoresmaj = new HashMap<>(7);
+    public Map<String, Integer> TableAffich = new HashMap<>(2);
     
     private int scorePartie;
     private int bonus;
