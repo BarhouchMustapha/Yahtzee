@@ -19,6 +19,10 @@ public  class Tour {
         return this.figuresDispo;
     }
 
+    public TableAffichage getTableAffichage(){
+        return this.T;
+    }
+
     public Lancer getLance(){
         return this.L;
     }
@@ -37,7 +41,64 @@ public  class Tour {
         return this.scoreTour;
     }
 
-    public boolean figureMajDisponible(Figure F){
+    public void listeDispo(Figure F){
+
+        switch (F.getNom().toLowerCase()) {
+            
+            case "berlan":
+                if(F.estBerlan(L.getDes())){
+                    figuresDispo.add("Berlan");
+                }
+                break;
+
+            case "carre":
+                if(F.estCarre(L.getDes())){
+                    figuresDispo.add("Carre");
+                }
+                break;
+
+            case "chance":
+                if(F.estchance()){
+                    figuresDispo.add("Chance");
+                }
+                break;
+            
+            case "full":
+                if(F.estFull(L.getDes())){
+                    figuresDispo.add("Full");
+                }
+                break;
+            
+            case "grandesuite":
+                if(F.estGrandeSuite(L.getDes())){
+                    figuresDispo.add("Grande Suite");
+                }
+                break;
+            
+            case "petitesuite":
+                if(F.estPetiteSuite(L.getDes())){
+                    figuresDispo.add("Petite Suite");
+                }
+                break;
+            
+                case "yahtzee":
+                    if(F.estYahtzee(L.getDes())){
+                        figuresDispo.add("Yahtzee");
+                    }
+                    break;   
+        }  
+        if (F instanceof FigureMineur){
+            FigureMineur Fmin =  (FigureMineur) F;
+            if(Fmin.estCorrecte(L.getDes())){
+                String fig = ""+ Fmin.getValDe();
+                figuresDispo.add(fig);
+            } 
+
+        }
+    }
+
+
+    public boolean figureDisponible(Figure F){
 
         boolean dispo = false;
         switch (F.getNom().toLowerCase()) {
@@ -45,7 +106,6 @@ public  class Tour {
             case "berlan":
                 if(F.estBerlan(L.getDes())){
                     dispo = true;
-                    figuresDispo.add("Berlan");
                 }
                 else
                     dispo = false;
@@ -54,7 +114,6 @@ public  class Tour {
             case "carre":
                 if(F.estCarre(L.getDes())){
                     dispo = true;
-                    figuresDispo.add("Carre");
                 }
                 else
                     dispo = false;
@@ -63,7 +122,6 @@ public  class Tour {
             case "chance":
                 if(F.estchance()){
                     dispo = true;
-                    figuresDispo.add("Chance");
                 }
                 else
                     dispo = false;
@@ -72,7 +130,6 @@ public  class Tour {
             case "full":
                 if(F.estFull(L.getDes())){
                     dispo = true;
-                    figuresDispo.add("Full");
                 }
                 else
                     dispo = false;
@@ -81,7 +138,6 @@ public  class Tour {
             case "grandesuite":
                 if(F.estGrandeSuite(L.getDes())){
                     dispo = true;
-                    figuresDispo.add("Grande Suite");
                 }
                 else
                     dispo = false;
@@ -90,7 +146,6 @@ public  class Tour {
             case "petitesuite":
                 if(F.estPetiteSuite(L.getDes())){
                     dispo = true;
-                    figuresDispo.add("Petite Suite");
                 }
                 else
                     dispo = false;
@@ -99,54 +154,50 @@ public  class Tour {
                 case "yahtzee":
                     if(F.estYahtzee(L.getDes())){
                         dispo = true;
-                        figuresDispo.add("Yahtzee");
                     }
                     else
                         dispo = false;
                     break;   
         }
+        if (F instanceof FigureMineur){
+            FigureMineur Fmin =  (FigureMineur) F;
+            if(Fmin.estCorrecte(L.getDes())){
+                dispo =  true;
+            }
+            else
+                dispo =  false;
+        }
+
         return dispo;         
     }
 
-    public boolean figureMinDisponible(FigureMineur F){
-
-        if(F.estCorrecte(L.getDes())){
-            String fig = ""+ F.getValDe();
-            figuresDispo.add(fig);
-            return true;
-        }
-        else
-            return false;
-
-    }
 
     
-    public boolean choisirMajFigure(Figure F){
-        if (this.figureMajDisponible(F)){
+    public boolean choisirFigure(Figure F){
+        boolean choix = false;
+        if (this.figureDisponible(F)){
             this.scoreTour = F.calculerScore(L.getDes());
             F.setPrise();
             remplirTablemaj(F, this.scoreTour);
             this.numTour++;
-            return true;
+            choix = true;
         }
-        else
-            System.out.println("Impossible de choisir cette figure");
-            return false;
+
+        if  (F instanceof FigureMineur) {
+            FigureMineur Fm =  (FigureMineur)F; 
+            if(this.figureDisponible(Fm)){
+                this.scoreTour = F.calculerScore(L.getDes());
+                F.setPrise();
+                remplirTablemin(Fm, this.scoreTour);
+                this.numTour++;
+                choix =  true;
+            }
+            
+        }
+
+        return choix;
     }
 
-    public boolean choisirMinFigure(FigureMineur F){
-            
-        if(this.figureMinDisponible(F)){
-            this.scoreTour = F.calculerScore(L.getDes());
-            F.setPrise();
-            remplirTablemin(F, this.scoreTour);
-            this.numTour++;
-            return true;
-        }
-        else
-            System.out.println("Impossible de choisir cette figure");
-            return false;
-    }
 
     public void barreFigure(FigureMineur F){
         this.scoreTour = 0;

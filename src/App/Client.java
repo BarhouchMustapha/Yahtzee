@@ -9,24 +9,24 @@ public class Client {
         final int PORT = 12345;
 
         try (
-            Socket socket = new Socket(SERVER_ADDRESS, PORT);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
-        ) {
+                Socket socket = new Socket(SERVER_ADDRESS, PORT);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
             String serverMessage;
             String userInput;
-            System.out.println("Bienvenue sur Yahtzee\n coisir vous commandes selon les valeurs proposé dans le menu");
+            System.out
+                    .println("Bienvenue sur Yahtzee\nchoisir vous commandes selon les valeurs proposeés dans le menu");
             // Lire et afficher le message du serveur
             while ((serverMessage = in.readLine()) != null) {
-                System.out.println("Server: " + serverMessage);
-                // Lire l'entrée de l'utilisateur et l'envoyer au serveur
-                if(serverMessage.contains("menu")){
+
+                System.out.println(serverMessage);
+
+                if (serverMessage.contains("choix")) {
                     userInput = stdIn.readLine();
                     out.println(userInput);
                 }
             }
-
 
         } catch (UnknownHostException e) {
             System.err.println("Unknown host: " + SERVER_ADDRESS);

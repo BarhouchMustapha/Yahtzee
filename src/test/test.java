@@ -1,4 +1,5 @@
 package test;
+import Figures.Figure;
 import Jeu.*;
 // import Figures.Full;
 
@@ -20,10 +21,14 @@ public class test {
         L.relancer();
         for(De d : des){
             System.out.print(d.getValeur()+" ");
-        }*/
-
+        
+        }
         TableAffichage T = new TableAffichage();
         T.afficherTable();
+        */
+
+        
+        
         
 
 

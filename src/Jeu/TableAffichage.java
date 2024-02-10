@@ -34,6 +34,14 @@ public class TableAffichage {
         this.scorePartie = 0;
     }
 
+    public Map<String, Integer> getTmaj(){
+        return this.TableScoresmaj;
+    }
+
+    public Map<String, Integer> getTmin(){
+        return this.TableScoresmin;
+    }
+
     public int getScorePartie(){
         return this.scorePartie;
     }
@@ -89,6 +97,22 @@ public class TableAffichage {
         this.TableAffich.put("Total fmaj", totalmaj);
         this.scorePartie = totalmaj + totalmin;
     }
+
+    public String affTable(){
+        String table = "";
+        for (Map.Entry<String, Integer> entry : TableScoresmaj.entrySet()) {
+            table = "" + entry.getKey() + ", Valeur : " + entry.getValue() + "\n";
+        }
+        table += "Total figures mineurs" + TableAffich.get("Total fmin")  + "\n";
+        for (Map.Entry<String, Integer> entry : TableScoresmin.entrySet()) {
+            table = "" + entry.getKey() + ", Valeur : " + entry.getValue() + "\n";
+        }
+        table += "Total figures majeurs" + TableAffich.get("Total fmaj")  + "\n";
+        table += "Total de jeu" + this.scorePartie + "\n";
+        return table;
+    }
+
+
 
     
     
