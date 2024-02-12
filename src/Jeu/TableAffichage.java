@@ -2,94 +2,76 @@ package Jeu;
 
 import java.util.HashMap;
 import java.util.Map;
+
 public class TableAffichage {
 
     public Map<String, Integer> TableScoresmin = new HashMap<>(6);
     public Map<String, Integer> TableScoresmaj = new HashMap<>(7);
     public Map<String, Integer> TableAffich = new HashMap<>(2);
-    
+
     private int scorePartie;
     private int bonus;
 
-    public TableAffichage(){
-        this.TableScoresmin.put("AS",null);
-        this.TableScoresmin.put("DEUX",null);
-        this.TableScoresmin.put("TROIS",null);
-        this.TableScoresmin.put("QUATRES",null);
-        this.TableScoresmin.put("CINQUES",null);
-        this.TableScoresmin.put("SIX",null);
+    public TableAffichage() {
+        this.TableScoresmin.put("AS", 0);
+        this.TableScoresmin.put("DEUX", 0);
+        this.TableScoresmin.put("TROIS", 0);
+        this.TableScoresmin.put("QUATRES", 0);
+        this.TableScoresmin.put("CINQUES", 0);
+        this.TableScoresmin.put("SIX", 0);
 
-        this.TableAffich.put("Total fmin",null);
+        this.TableAffich.put("Total fmin", 0);
 
-        this.TableScoresmaj.put("BERLAN",null);
-        this.TableScoresmaj.put("CARRE",null);
-        this.TableScoresmaj.put("FULL",null);
-        this.TableScoresmaj.put("PETITE SUITE",null);
-        this.TableScoresmaj.put("GRANDE SUITE",null);
-        this.TableScoresmaj.put("YAHTZEE",null);
-        this.TableScoresmaj.put("CHANCE",null);
+        this.TableScoresmaj.put("BERLAN", 0);
+        this.TableScoresmaj.put("CARRE", 0);
+        this.TableScoresmaj.put("FULL", 0);
+        this.TableScoresmaj.put("PETITESUITE", 0);
+        this.TableScoresmaj.put("GRANDESUITE", 0);
+        this.TableScoresmaj.put("YAHTZEE", 0);
+        this.TableScoresmaj.put("CHANCE", 0);
         this.bonus = 0;
-        this.TableAffich.put("Total fmaj",null);
+        this.TableAffich.put("Total fmaj", 0);
 
         this.scorePartie = 0;
     }
 
-    public Map<String, Integer> getTmaj(){
+    public Map<String, Integer> getTmaj() {
         return this.TableScoresmaj;
     }
 
-    public Map<String, Integer> getTmin(){
+    public Map<String, Integer> getTmin() {
         return this.TableScoresmin;
     }
 
-    public int getScorePartie(){
+    public int getScorePartie() {
         return this.scorePartie;
     }
 
-    public void afficherTable(){
-       
-        System.out.println("Figures Mineures:");
-        for (String key : TableScoresmin.keySet()) {
-            System.out.println(key + ": " + TableScoresmin.get(key));
-        }
-        System.out.println( "Bonus +35 " + this.bonus);
-        System.out.println( "Total figures mineurs: " + TableAffich.get("Total fmin")+"\n");
-
-
-        System.out.println("Figures Majeurs:");
-        for (String key : TableScoresmaj.keySet()) {
-            System.out.println(key + ": " + TableScoresmaj.get(key));
-        }
-        System.out.println( "Total figures majeurs: " + TableAffich.get("Total fmaj")+"\n");
-        System.out.println( "Total de la Partie: "+ this.getScorePartie() );
-    }
-
-    public void ajouterBonus(){
+    public void ajouterBonus() {
         int sommemin = 0;
         for (String key : TableScoresmin.keySet()) {
-            if (TableScoresmin.get(key) != null){
+            if (TableScoresmin.get(key) != null) {
                 sommemin += TableScoresmin.get(key);
             }
         }
-        if (sommemin >= 63 ){
+        if (sommemin >= 63) {
             this.bonus = 35;
         }
     }
 
-    public void claculerTotals(){
-        int totalmin=0;
-        int totalmaj=0;
-
+    public void claculerTotals() {
+        int totalmin = 0;
+        int totalmaj = 0;
 
         for (String key : TableScoresmin.keySet()) {
-            if (TableScoresmin.get(key) != null){
+            if (TableScoresmin.get(key) != null) {
                 totalmin += TableScoresmin.get(key);
             }
         }
 
         for (String key : TableScoresmaj.keySet()) {
-            if (TableScoresmaj.get(key) != null){
-                totalmaj += TableScoresmin.get(key);
+            if (TableScoresmaj.get(key) != null) {
+                totalmaj += TableScoresmaj.get(key);
             }
         }
 
@@ -98,27 +80,21 @@ public class TableAffichage {
         this.scorePartie = totalmaj + totalmin;
     }
 
-    public String affTable(){
-        String table = "";
-        for (Map.Entry<String, Integer> entry : TableScoresmaj.entrySet()) {
-            table = "" + entry.getKey() + ", Valeur : " + entry.getValue() + "\n";
-        }
-        table += "Total figures mineurs" + TableAffich.get("Total fmin")  + "\n";
+    public String affTable() {
+        String table = "----------------------------Figeurs Mineurs-------------------------- : \n";
         for (Map.Entry<String, Integer> entry : TableScoresmin.entrySet()) {
-            table = "" + entry.getKey() + ", Valeur : " + entry.getValue() + "\n";
+            table += "-" + entry.getKey() + " : " + entry.getValue() + "\n";
         }
-        table += "Total figures majeurs" + TableAffich.get("Total fmaj")  + "\n";
-        table += "Total de jeu" + this.scorePartie + "\n";
+        table += "-Bonus +35 : " + this.bonus + "\n";
+        table += "-Total figures mineurs : " + TableAffich.get("Total fmin") + "\n";
+        table += "-------------------------------Figeurs Majeurs------------------------------ \n";
+        for (Map.Entry<String, Integer> entry : TableScoresmaj.entrySet()) {
+            table += "-" + entry.getKey() + " : " + entry.getValue() + "\n";
+        }
+        table += "-Total figures majeurs : " + TableAffich.get("Total fmaj") + "\n";
+        table += "-Total de jeu : " + this.scorePartie + "\n";
+        table += "------------------------------Fin de Jeu-------------------------------------";
         return table;
     }
 
-
-
-    
-    
-
-
-
-    
-    
 }

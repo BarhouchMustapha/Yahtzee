@@ -126,8 +126,12 @@ public class Figure {
                 Deuxmemesval = true;
             }
         }
-
+        
+        if (!this.estPrise()){
         return Berlan && Deuxmemesval;
+        }
+        return false;
+
     }
 
     public boolean estGrandeSuite(De[] des) {
@@ -139,7 +143,10 @@ public class Figure {
                 return false; // Si la difference n'est pas de 1, ce n'est pas une suite
             }
         }
+        if (!this.estPrise()){
         return true; // Si la boucle se termine, c'est une suite croissante
+        }
+        return false;
     }
 
     public boolean estPetiteSuite(De[] des) {
@@ -151,7 +158,7 @@ public class Figure {
             // Verifie si la difference entre chaque de adjacent est egale à 1
             if (des[i + 1].getValeur() - des[i].getValeur() == 1) {
                 count++; // Incremente le compteur si la difference est de 1
-                if (count >= 3) { // Si nous avons au moins trois des consecutifs
+                if (count >= 3 && !this.estPrise()) { // Si nous avons au moins trois des consecutifs
                     return true; // Retourne true, car les quatre des forment une suite
                 }
             } else {
@@ -169,7 +176,7 @@ public class Figure {
                     count++;  // Incrémenter count à chaque fois que la valeur de de est egale à i
                 }
             }
-            if (count == 5) { 
+            if (count == 5 && !this.estPrise()) { 
                 return true;
             }
         }

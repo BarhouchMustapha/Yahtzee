@@ -8,6 +8,7 @@ public  class Tour {
     private Lancer L;
     private TableAffichage T;
     private ArrayList<String> figuresDispo = new ArrayList<>();
+    private ArrayList<String> figuresNPrise = new ArrayList<>();
 
     public Tour(){
         this.scoreTour = 0;
@@ -17,6 +18,18 @@ public  class Tour {
     }
     public ArrayList<String> getFigDispo(){
         return this.figuresDispo;
+    }
+
+    public ArrayList<String> getFigNPrise(){
+        return this.figuresNPrise;
+    }
+
+    public void clearFigDispo(){
+        this.figuresDispo.clear();
+    }
+
+    public void clearFigNPrise(){
+        this.figuresNPrise.clear();
     }
 
     public TableAffichage getTableAffichage(){
@@ -39,6 +52,67 @@ public  class Tour {
     public int getscoreTour()
     {
         return this.scoreTour;
+    }
+
+    public void setscoreTour()
+    {
+        this.scoreTour = 0;
+    }
+
+    public void listeNPrise(Figure F){
+
+        switch (F.getNom().toLowerCase()) {
+            
+            case "berlan":
+                if(!F.estPrise()){
+                    figuresNPrise.add("berlan");
+                }
+                break;
+
+            case "carre":
+                if(!F.estPrise()){
+                    figuresNPrise.add("carre");
+                }
+                break;
+
+            case "chance":
+                if(!F.estPrise()){
+                    figuresNPrise.add("chance");
+                }
+                break;
+            
+            case "full":
+                if(!F.estPrise()){
+                    figuresNPrise.add("full");
+                }
+                break;
+            
+            case "grandesuite":
+                if(!F.estPrise()){
+                    figuresNPrise.add("grandesuite");
+                }
+                break;
+            
+            case "petitesuite":
+                if(!F.estPrise()){
+                    figuresNPrise.add("petitesuite");
+                }
+                break;
+            
+                case "yahtzee":
+                    if(!F.estPrise()){
+                        figuresNPrise.add("yahtzee");
+                    }
+                    break;   
+        }  
+        if (F instanceof FigureMineur){
+            FigureMineur Fmin =  (FigureMineur) F;
+            if(!Fmin.estPrise()){
+                String fig = ""+ Fmin.getValDe();
+                figuresNPrise.add(fig);
+            } 
+
+        }
     }
 
     public void listeDispo(Figure F){
@@ -175,14 +249,6 @@ public  class Tour {
     
     public boolean choisirFigure(Figure F){
         boolean choix = false;
-        if (this.figureDisponible(F)){
-            this.scoreTour = F.calculerScore(L.getDes());
-            F.setPrise();
-            remplirTablemaj(F, this.scoreTour);
-            this.numTour++;
-            choix = true;
-        }
-
         if  (F instanceof FigureMineur) {
             FigureMineur Fm =  (FigureMineur)F; 
             if(this.figureDisponible(Fm)){
@@ -191,109 +257,54 @@ public  class Tour {
                 remplirTablemin(Fm, this.scoreTour);
                 this.numTour++;
                 choix =  true;
-            }
-            
+            }   
         }
+        else if (this.figureDisponible(F)){
+            this.scoreTour = F.calculerScore(L.getDes());
+            F.setPrise();
+            remplirTablemaj(F, this.scoreTour);
+            this.numTour++;
+            choix = true;
+        }
+
 
         return choix;
     }
 
 
-    public void barreFigure(FigureMineur F){
+    public boolean barreFigure(Figure F){
         this.scoreTour = 0;
-        F.setPrise();
-        remplirTablemaj(F, this.scoreTour);
-        remplirTablemin(F, this.scoreTour);
+        boolean succe = false;
+        if(this.getFigNPrise().contains(F.getNom())){
+            F.setPrise();
+            remplirTablemaj(F, this.scoreTour);
+            succe = true;
+        }
+        if  (F instanceof FigureMineur) {
+            FigureMineur Fm =  (FigureMineur)F; 
+            int valde = Fm.getValDe();
+            if(this.getFigNPrise().contains(String.valueOf(valde))){
+                Fm.setPrise();
+                remplirTablemin(Fm, this.scoreTour);
+            }
+        }
         this.numTour++;
+        return succe;
     }
 
     public void remplirTablemaj(Figure F, int score){
         
-        switch (F.getNom().toLowerCase()) {
-            
-            case "berlan":
-                if(F.estBerlan(L.getDes())){
-                    T.TableScoresmaj.put("BERLAN",score);
-                }
-                break;
+        String figure;
+        figure = F.getNom().toUpperCase();
+        T.TableScoresmaj.put(figure,score);
 
-            case "carre":
-                if(F.estCarre(L.getDes())){
-                    T.TableScoresmaj.put("CARRE",score);
-                }
-                break;
-
-            case "chance":
-                if(F.estchance()){
-                    T.TableScoresmaj.put("CHANCE",score);
-                }
-                break;
-            
-            case "full":
-                if(F.estFull(L.getDes())){
-                    T.TableScoresmaj.put("FULL",score);
-                }
-                break;
-            
-            case "grandesuite":
-                if(F.estGrandeSuite(L.getDes())){
-                    T.TableScoresmaj.put("GRANDE SUITE",score);
-                }
-                break;
-                
-            case "petitesuite":
-                if(F.estPetiteSuite(L.getDes())){
-                    T.TableScoresmaj.put("PETITE SUITE",score);
-                }
-                break;
-            
-                case "yahtzee":
-                    if(F.estYahtzee(L.getDes())){
-                        T.TableScoresmaj.put("YAHTZEE",score);                    }
-                    break;   
-        }
     }
 
     public void remplirTablemin(FigureMineur F, int score){
         
-        switch (F.getNom().toUpperCase()) {
-            
-            case "AS":
-                if(F.estBerlan(L.getDes())){
-                    T.TableScoresmin.put("AS",score);
-                }
-                break;
-
-            case "DEUX":
-                if(F.estCarre(L.getDes())){
-                    T.TableScoresmin.put("DEUX",score);
-                }
-                break;
-
-            case "TROIS":
-                if(F.estchance()){
-                    T.TableScoresmin.put("TROIS",score);
-                }
-                break;
-            
-            case "QUATRES":
-                if(F.estFull(L.getDes())){
-                    T.TableScoresmin.put("QUATRES",score);
-                }
-                break;
-            
-            case "CINQUES":
-                if(F.estGrandeSuite(L.getDes())){
-                    T.TableScoresmin.put("CINQUES",score);
-                }
-                break;
-                
-            case "SIX":
-                if(F.estPetiteSuite(L.getDes())){
-                    T.TableScoresmin.put("SIX",score);
-                }
-                break;   
-        }
+        String figure;
+        figure = F.getNom().toUpperCase();
+        T.TableScoresmin.put(figure,score);
 
 
     }

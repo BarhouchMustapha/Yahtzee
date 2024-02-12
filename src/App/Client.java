@@ -15,8 +15,16 @@ public class Client {
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
             String serverMessage;
             String userInput;
-            System.out
-                    .println("Bienvenue sur Yahtzee\nchoisir vous commandes selon les valeurs proposeés dans le menu");
+            System.out.println("Bienvenue sur Yahtzee");
+            System.out.println("---------Consignes pour avoir une meilleur performance de jeu----------");
+            System.out.println("Il faut toujours entrer des entrées Valides selon les valeurs proposé dans le menu");
+            System.out.println(
+                    "Pour choisir les Figures Grande suite et Petite Suite il faut entrer 'grandesuite' ou 'petite suite' ");
+            System.out.println(
+                    "Pour le choix des autres figurs majeurs il faut juste écrire son nom {berlan ,carre ,full ,chance ,yahtzee}");
+            System.out.println("Pour le choix des autres figurs mineurs il faut entrer la valeur de dé");
+            System.out.println("--------------------------------------------------------------------------");
+            System.out.println("choisir vous commandes selon les valeurs proposeés dans le menu");
             // Lire et afficher le message du serveur
             while ((serverMessage = in.readLine()) != null) {
 
@@ -29,10 +37,10 @@ public class Client {
             }
 
         } catch (UnknownHostException e) {
-            System.err.println("Unknown host: " + SERVER_ADDRESS);
+            System.err.println("Connection impossible à :  " + SERVER_ADDRESS);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: " + SERVER_ADDRESS);
+            System.err.println("Connection impossible à: " + SERVER_ADDRESS);
             System.exit(1);
         }
     }

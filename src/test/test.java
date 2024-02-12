@@ -22,10 +22,10 @@ public class test {
         for(De d : des){
             System.out.print(d.getValeur()+" ");
         
-        }
+        }*/
         TableAffichage T = new TableAffichage();
-        T.afficherTable();
-        */
+        System.out.println(T.affTable());
+        
 
         
         
