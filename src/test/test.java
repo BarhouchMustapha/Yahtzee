@@ -1,5 +1,4 @@
 package test;
-import Figures.Figure;
 import Jeu.*;
 // import Figures.Full;
 
