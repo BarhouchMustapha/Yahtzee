@@ -17,12 +17,10 @@ public class Client {
             String userInput;
             System.out.println("Bienvenue sur Yahtzee");
             System.out.println("---------Consignes pour avoir une meilleur performance de jeu----------");
-            System.out.println("Il faut toujours entrer des entrées Valides selon les valeurs proposé dans le menu");
-            System.out.println(
-                    "Pour choisir les Figures Grande suite et Petite Suite il faut entrer 'grandesuite' ou 'petite suite' ");
-            System.out.println(
-                    "Pour le choix des autres figurs majeurs il faut juste écrire son nom {berlan ,carre ,full ,chance ,yahtzee}");
-            System.out.println("Pour le choix des autres figurs mineurs il faut entrer la valeur de dé");
+            System.out.println("Il faut toujours entrer des entrées Valides selon les valeurs proposées dans le menu");
+            System.out.println( "Pour choisir les Figures Grande suite et Petite Suite il faut entrer 'grandesuite' ou 'petitesuite' ");
+            System.out.println("Pour le choix des autres figurs majeures il faut juste écrire son nom {berlan ,carre ,full ,chance ,yahtzee}");
+            System.out.println("Pour le choix des figurs mineurs il faut entrer la valeur de dé");
             System.out.println("--------------------------------------------------------------------------");
             System.out.println("choisir vous commandes selon les valeurs proposeés dans le menu");
             // Lire et afficher le message du serveur
