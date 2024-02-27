@@ -44,6 +44,10 @@ public  class Tour {
         this.L.lancer();
     }
 
+    public void relancer(ArrayList<Integer> liste){
+        this.L.relancer(liste);
+    }
+
     public int getnumTour()
     {
         return this.numTour;

@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import Figures.*;
 import Jeu.*;
+import java.util.ArrayList;
 
 public class Server {
     public static void main(String[] args) {
@@ -72,20 +73,60 @@ class ClientHandler implements Runnable {
                 } else {
                     clientSocket.close();
                 }
-                out.println("\nChoisir parmi les figures disponible : ");
-                tour.listeDispo(berlan);
-                tour.listeDispo(carre);
-                tour.listeDispo(chance);
-                tour.listeDispo(full);
-                tour.listeDispo(Gsuite);
-                tour.listeDispo(Psuite);
-                tour.listeDispo(yahtzee);
-                tour.listeDispo(as);
-                tour.listeDispo(deux);
-                tour.listeDispo(trois);
-                tour.listeDispo(quatres);
-                tour.listeDispo(cinques);
-                tour.listeDispo(six);
+                out.println("\nVous pouvez choisir parmi les figures disponible : ");
+
+                for(int i=0 ; i<2 ; i++){
+                    out.println("Vous Voulez relancer des dés? ");
+                    out.println("N: pour NON ");
+                    out.println("O: pour OUI ");
+                    out.println("choix : ");
+                    String choixrelance = in.readLine();
+                    choixrelance.toUpperCase();
+                    if(choixrelance == "N"){
+                        break;
+                    }
+                    else
+                    {
+                        String conditionRelance = "O";
+                        int countRelance = 0;
+                        ArrayList<Integer> Drelance = new ArrayList<>();
+                        do{
+                            out.println("Choisir les dés à relancer dé par dé");
+                            out.println("choix : ");
+                            int De = Integer.parseInt(in.readLine());
+                            Drelance.add(De);
+                            out.println("Vous voulez relancer encore des dés?");
+                            out.println("N: pour NON ");
+                            out.println("O: pour OUI ");
+                            out.println("choix : ");
+                            conditionRelance = in.readLine().toUpperCase();
+                            countRelance++;
+                        } while (conditionRelance.equals("O") && countRelance<5) ;
+                        
+                        tour.relancer(Drelance);
+                        for (De d : tour.getLance().getDes()){
+                            out.print(d.getValeur() + " ");
+                        }
+                        out.println("\nVous pouvez choisir parmi les figures disponible : ");
+                        tour.listeDispo(berlan);
+                        tour.listeDispo(carre);
+                        tour.listeDispo(chance);
+                        tour.listeDispo(full);
+                        tour.listeDispo(Gsuite);
+                        tour.listeDispo(Psuite);
+                        tour.listeDispo(yahtzee);
+                        tour.listeDispo(as);
+                        tour.listeDispo(deux);
+                        tour.listeDispo(trois);
+                        tour.listeDispo(quatres);
+                        tour.listeDispo(cinques);
+                        tour.listeDispo(six);
+                        out.println(tour.getFigDispo());
+                        if(i < 1)
+                            tour.clearFigDispo();
+                        
+                    }
+                }
 
                 if (tour.getFigDispo().isEmpty()) {
                     tour.listeNPrise(berlan);
@@ -231,9 +272,6 @@ class ClientHandler implements Runnable {
                 }
 
                 else {
-
-                    out.println(tour.getFigDispo());
-                    tour.clearFigDispo();
                     out.println("Veuillez choisir une figure parmi les figures présentes dans cette liste ...");
                     out.println("choix : ");
                     String choixFig = in.readLine();

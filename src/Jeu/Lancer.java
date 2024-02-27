@@ -1,4 +1,5 @@
 package Jeu;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Lancer {
@@ -33,17 +34,17 @@ public class Lancer {
         this.des[4] = d_5;
     }
 
-    public void relancer(){
+    public void relancer(ArrayList<Integer> vals){
         De d;
-        System.out.println("Veulliez entrer la valeur de de a relancer");
-        int val = this.scanner.nextInt();
-        d = debyVal(val);
-        
-        for(int i=0;i<5;i++){
-            if(this.des[i].getValeur() == d.getValeur()){
-                this.des[i].lancer();
+        for (int val : vals) {
+            d = debyVal(val);
+            
+            for(int i=0;i<5;i++){
+                if(this.des[i].getValeur() == d.getValeur()){
+                    this.des[i].lancer();
+                }
             }
-        }
+        }   
     }
 
     public De debyVal(int valeur) {
