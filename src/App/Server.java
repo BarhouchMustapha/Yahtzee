@@ -7,25 +7,49 @@ import Jeu.*;
 import java.util.ArrayList;
 
 public class Server {
-    public static void main(String[] args) {
-        final int PORT = 12345;
+    private ServerSocket serverSocket;
+    private boolean running;
+    private int port;
 
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Server is running...");
+    public Server(int port) {
+        this.port = port;
+    }
 
-            while (true) {
+    public void start() {
+        try {
+            this.serverSocket = new ServerSocket(port);
+            this.running = true;
+            System.out.println("Server is running on port " + port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        while (running) {
+            try {
+                // Accepter les connexions des clients
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket);
 
                 // Créer un nouveau thread pour gérer le client
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 new Thread(clientHandler).start();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    public void stop() {
+        try {
+            running = false;
+            serverSocket.close();
+            System.out.println("Server stopped");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+
 
 class ClientHandler implements Runnable {
     private Socket clientSocket;
@@ -64,7 +88,7 @@ class ClientHandler implements Runnable {
                 out.println("1 : Lancer les des");
                 out.println("2 : Exit");
                 out.println("choix : ");
-
+                tour.clearFigDispo();
                 int choix = Integer.parseInt(in.readLine());
                 if (choix == 1) {
                     tour.lancer();
@@ -74,6 +98,21 @@ class ClientHandler implements Runnable {
                     clientSocket.close();
                 }
                 out.println("\nVous pouvez choisir parmi les figures disponible : ");
+                tour.listeDispo(berlan);
+                tour.listeDispo(carre);
+                tour.listeDispo(chance);
+                tour.listeDispo(full);
+                tour.listeDispo(Gsuite);
+                tour.listeDispo(Psuite);
+                tour.listeDispo(yahtzee);
+                tour.listeDispo(as);
+                tour.listeDispo(deux);
+                tour.listeDispo(trois);
+                tour.listeDispo(quatres);
+                tour.listeDispo(cinques);
+                tour.listeDispo(six);
+                out.println(tour.getFigDispo());    
+                
 
                 for(int i=0 ; i<2 ; i++){
                     out.println("Vous Voulez relancer des dés? ");
@@ -82,11 +121,12 @@ class ClientHandler implements Runnable {
                     out.println("choix : ");
                     String choixrelance = in.readLine();
                     choixrelance.toUpperCase();
-                    if(choixrelance == "N"){
+                    if(choixrelance.equals("N")){
                         break;
                     }
                     else
                     {
+                        tour.clearFigDispo();
                         String conditionRelance = "O";
                         int countRelance = 0;
                         ArrayList<Integer> Drelance = new ArrayList<>();
@@ -122,8 +162,8 @@ class ClientHandler implements Runnable {
                         tour.listeDispo(cinques);
                         tour.listeDispo(six);
                         out.println(tour.getFigDispo());
-                        if(i < 1)
-                            tour.clearFigDispo();
+                        //if(i < 1)
+                           // tour.clearFigDispo();
                         
                     }
                 }
@@ -273,6 +313,7 @@ class ClientHandler implements Runnable {
 
                 else {
                     out.println("Veuillez choisir une figure parmi les figures présentes dans cette liste ...");
+                    out.println(tour.getFigDispo());    
                     out.println("choix : ");
                     String choixFig = in.readLine();
                     switch (choixFig.toLowerCase()) {

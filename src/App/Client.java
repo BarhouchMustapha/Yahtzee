@@ -3,8 +3,13 @@ package App;
 import java.io.*;
 import java.net.*;
 
-public class Client {
+
+
+public class Client  {
+
     public static void main(String[] args) {
+        
+
         final String SERVER_ADDRESS = "localhost";
         final int PORT = 12345;
 

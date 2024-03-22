@@ -42,6 +42,7 @@ public class Lancer {
             for(int i=0;i<5;i++){
                 if(this.des[i].getValeur() == d.getValeur()){
                     this.des[i].lancer();
+                    break;
                 }
             }
         }   
@@ -58,12 +59,6 @@ public class Lancer {
                     valide = true;
                     break; // Sortir de la boucle for une fois que le dé est trouvé
                 }
-            }
-    
-            if (!valide) {
-                System.out.println("La valeur que vous avez saisie ne correspond à aucun dé existant.");
-                System.out.println("Veulliez entrer à nouveau la valeur d'un dé existant :");
-                valeur = this.scanner.nextInt();
             }
         }
     
